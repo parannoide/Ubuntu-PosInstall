@@ -1,2 +1,2 @@
-# Linux-Mint-19.x-PosInstall
-Shell Script de pós instalação do Linux Mint 19.x para utilização pessoal.
+# Linux-Ubuntu-20.10-PosInstall
+Shell Script de pós instalação do Linux Ubuntu 20.10 para utilização pessoal.

@@ -9,29 +9,42 @@ URL_GOOGLE_CHROME="https://dl.google.com/linux/direct/google-chrome-stable_curre
 
 DIRETORIO_DOWNLOADS="$HOME/Downloads/programas"
 
-PROGRAMAS_PARA_INSTALAR=(
-  git
-  python3
-  openssl
-  openvpn
-  cups
-  firefox
-  flatpak
-  google-chrome-stable
-  grub-customizer
-  htop
-  vim
-  snapd
-  ratbagd
-  piper
-  zsh
-  gnome-software-plugin-flatpak
-  apt-transport-https
-  curl
-  gnupg
-  keepassxc
-  glogg
+APT_APPS=(
+    git
+    python3
+    openssl
+    openvpn
+    cups
+    firefox
+    flatpak
+    google-chrome-stable
+    grub-customizer
+    htop
+    vim
+    snapd
+    ratbagd
+    piper
+    zsh
+    gnome-software-plugin-flatpak
+    apt-transport-https
+    curl
+    gnupg
+    keepassxc
+    glogg
 )
+FLAT_APPS=(
+    com.skype.Client
+    io.dbeaver.DBeaverCommunity
+)
+
+SNAP_APPS=(
+    spotify
+    postman
+    gimp
+    rocketchat-desktop
+)
+
+
 # ---------------------------------------------------------------------- #
 
 # ----------------------------- REQUISITOS ----------------------------- #
@@ -74,22 +87,27 @@ wget -c "$URL_GOOGLE_CHROME"       -P "$DIRETORIO_DOWNLOADS"
  sudo dpkg -i $DIRETORIO_DOWNLOADS/*.deb
 
 # Instalar programas no apt
-for nome_do_programa in ${PROGRAMAS_PARA_INSTALAR[@]}; do
+for nome_do_programa in ${APT_APPS[@]}; do
     echo "Instalando: $nome_do_programa"
     sudo apt install "$nome_do_programa" -y
-    echo "Passando para o próximo, se houver..."
 done
 
 ## Instalando pacotes Flatpak ##
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install com.skype.Client io.dbeaver.DBeaverCommunity -y
 
 ## Instalando pacotes Snap ##
-sudo snap install spotify
-sudo snap install postman
-sudo snap install gimp
+for nome_do_programa in ${SNAP_APPS[@]}; do
+    echo "Instalando: $nome_do_programa"
+    sudo flatpak install "$nome_do_programa"
+done
+
+## Instalando pacotes Snap ##
+for nome_do_programa in ${SNAP_APPS[@]}; do
+    echo "Instalando: $nome_do_programa"
+    sudo snap install "$nome_do_programa"
+done
 sudo snap install code --classic
-sudo snap install rocketchat-desktop
+
 # ---------------------------------------------------------------------- #
 
 # ----------------------------- PÓS-INSTALAÇÃO ----------------------------- #

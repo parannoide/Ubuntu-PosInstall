@@ -35,11 +35,12 @@ APT_APPS=(
 FLAT_APPS=(
     com.skype.Client
     io.dbeaver.DBeaverCommunity
+    com.getpostman.Postman
+    org.filezillaproject.Filezilla
+    org.libreoffice.LibreOffice
 )
 
 SNAP_APPS=(
-    spotify
-    postman
     gimp
     rocketchat-desktop
 )
@@ -68,13 +69,6 @@ sudo apt-add-repository "deb $URL_PPA_WINE bionic main"
 
 # ---------------------------------------------------------------------- #
 
-
-#-------------------------- BRAVE -----------------------------------#
-curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
-
-echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-#--------------------------------------------------------------------#
-
 # ----------------------------- EXECUÇÃO ----------------------------- #
 ## Atualizando o repositório depois da adição de novos repositórios ##
 sudo apt update -y
@@ -84,7 +78,7 @@ mkdir "$DIRETORIO_DOWNLOADS"
 wget -c "$URL_GOOGLE_CHROME"       -P "$DIRETORIO_DOWNLOADS"
 
 ## Instalando pacotes .deb baixados na sessão anterior ##
- sudo dpkg -i $DIRETORIO_DOWNLOADS/*.deb
+sudo dpkg -i $DIRETORIO_DOWNLOADS/*.deb
 
 # Instalar programas no apt
 for nome_do_programa in ${APT_APPS[@]}; do
@@ -98,7 +92,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 ## Instalando pacotes Snap ##
 for nome_do_programa in ${SNAP_APPS[@]}; do
     echo "Instalando: $nome_do_programa"
-    sudo flatpak install "$nome_do_programa"
+    sudo flatpak install flathub "$nome_do_programa"
 done
 
 ## Instalando pacotes Snap ##
@@ -106,7 +100,6 @@ for nome_do_programa in ${SNAP_APPS[@]}; do
     echo "Instalando: $nome_do_programa"
     sudo snap install "$nome_do_programa"
 done
-sudo snap install code --classic
 
 # ---------------------------------------------------------------------- #
 
